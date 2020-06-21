@@ -1,4 +1,4 @@
-package hassigo
+package goha
 
 import (
 	"bytes"
@@ -10,6 +10,7 @@ import (
 	"net/url"
 	"time"
 )
+
 
 type Hass struct {
 	EventManager EventManager

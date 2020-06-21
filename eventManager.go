@@ -1,4 +1,4 @@
-package hassigo
+package goha
 
 import (
 	"context"
@@ -12,6 +12,7 @@ import (
 	"github.com/gorilla/websocket"
 )
 
+// EventManager is
 type EventManager struct {
 	subscriptions map[string]subscription
 	chSubUpdate   chan subscriptionChanged
@@ -24,6 +25,7 @@ type subscription struct {
 	attributes map[string][]chan Event
 }
 
+// Event is
 type Event struct {
 	EventType string       `json:"event_type"`
 	Data      EventData    `json:"data"`
@@ -32,6 +34,7 @@ type Event struct {
 	Context   EventContext `json:"context"`
 }
 
+// EventData is
 type EventData struct {
 	EntityID  string `json:"entity_id,omitempty"`
 	Attribute string
@@ -39,6 +42,7 @@ type EventData struct {
 	NewState  EventState `json:"new_state"`
 }
 
+// EventState is
 type EventState struct {
 	EntityID    string                 `json:"entity_id"`
 	State       string                 `json:"state"`
@@ -48,6 +52,7 @@ type EventState struct {
 	Context     EventContext           `json:"context"`
 }
 
+// EventContext is
 type EventContext struct {
 	ID       string `json:"id"`
 	ParentID string `json:"parent_id"`
@@ -205,6 +210,7 @@ func (em *EventManager) resubscribe() error {
 	return nil
 }
 
+// Connected is
 func (em *EventManager) Connected() bool {
 	em.mux.RLock()
 	defer em.mux.RUnlock()
@@ -336,6 +342,7 @@ func (em *EventManager) manageSubscriptions(ctx context.Context) {
 	}
 }
 
+// Subscribe is
 func (em *EventManager) Subscribe(entityID string, attribute string, ch chan Event) {
 	em.chSubUpdate <- subscriptionChanged{
 		subscribe: true,
@@ -345,6 +352,7 @@ func (em *EventManager) Subscribe(entityID string, attribute string, ch chan Eve
 	}
 }
 
+// Unsubscribe is
 func (em *EventManager) Unsubscribe(entityID string, attribute string, ch chan Event) {
 	em.chSubUpdate <- subscriptionChanged{
 		subscribe: false,
