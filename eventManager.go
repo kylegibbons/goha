@@ -189,7 +189,7 @@ func (em *EventManager) connect(ctx context.Context, URI string, token string, i
 		case <-ctx.Done():
 			return nil
 		default:
-			u := url.URL{Scheme: "ws", Host: URI, Path: "/api/websocket"}
+			u := url.URL{Scheme: "ws", Host: URI, Path: "/core/websocket"}
 			log.Printf("connecting to %s", u.String())
 
 			c, _, err := websocket.DefaultDialer.Dial(u.String(), nil)

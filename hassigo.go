@@ -11,7 +11,6 @@ import (
 	"time"
 )
 
-
 type Hass struct {
 	EventManager EventManager
 	token        string
@@ -45,7 +44,7 @@ type Entity struct {
 func (ha *Hass) GetState(entityID string) (Entity, error) {
 	bearer := fmt.Sprintf("Bearer %s", ha.token)
 
-	uri := url.URL{Scheme: "http", Host: ha.uri, Path: fmt.Sprintf("/api/states/%s", entityID)}
+	uri := url.URL{Scheme: "http", Host: ha.uri, Path: fmt.Sprintf("/core/api/states/%s", entityID)}
 
 	req, err := http.NewRequest("GET", uri.String(), nil)
 	req.Header.Add("Authorization", bearer)
@@ -75,7 +74,7 @@ func (ha *Hass) GetState(entityID string) (Entity, error) {
 func (ha *Hass) CallService(domain string, service string, serviceData interface{}) error {
 	bearer := fmt.Sprintf("Bearer %s", ha.token)
 
-	uri := url.URL{Scheme: "http", Host: ha.uri, Path: fmt.Sprintf("/api/services/%s/%s", domain, service)}
+	uri := url.URL{Scheme: "http", Host: ha.uri, Path: fmt.Sprintf("/core/api/services/%s/%s", domain, service)}
 
 	req, err := http.NewRequest("POST", uri.String(), nil)
 	req.Header.Add("Authorization", bearer)
